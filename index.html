@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
+        integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+
+
+    <title>Booklet Creep Template</title>
+    <style>
+        .content {
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pure-g">
+        <div class="content pure-u-1-3">
+            <form class="creep-form pure-form pure-form-stacked">
+                <label for="page-width">Page width</label>
+                <input type="number" id="page-width" step=".125" placeholder="8.5" value="8.5" />
+
+                <label for="page-height">Page height</label>
+                <input type="number" id="page-height" placeholder="11" value="11" />
+
+                <label for="numpages">Booklet number of pages</label>
+                <input type="number" id="numpages" placeholder="8" value="8" />
+
+                <label for="paper"> Text pages stock </label>
+                <select id="paper">
+                    <optgroup label="Offset Text">
+                        <option value="0.004">50# Offset text</option>
+                        <option value="0.0045">60# Offset text</option>
+                        <option value="0.005">70# Offset text</option>
+                        <option value="0.006">80# Offset text</option>
+                        <option value="0.007">100# Offset text</option>
+                    </optgroup>
+                    <optgroup label="Offset Cover">
+                        <option value="0.0065">50# Offset cover</option>
+                        <option value="0.0095">65# Offset cover</option>
+                        <option value="0.0115">80# Offset cover</option>
+                    </optgroup>
+                    <optgroup label="Gloss Text">
+                        <option value="0.0029">60# Coated Gloss text</option>
+                        <option value="0.0035">70# Coated Gloss text</option>
+                        <option value="0.0038">80# Coated Gloss text</option>
+                        <option value="0.0048">100# Coated Gloss text</option>
+                    </optgroup>
+                    <optgroup label="Dull Text">
+                        <option value="0.00325">60# Coated Dull text</option>
+                        <option value="0.0037">70# Coated Dull text</option>
+                        <option value="0.00425">80# Coated Dull text</option>
+                        <option value="0.0054">100# Coated Dull text</option>
+                    </optgroup>
+                    <optgroup label="Gloss Cover">
+                        <option value="0.0055">60# Coated Gloss cover</option>
+                        <option value="0.0075">80# Coated Gloss cover</option>
+                        <option value="0.0095">100# Coated Gloss cover</option>
+                        <option value="0.012">120# Coated Gloss cover</option>
+                    </optgroup>
+                    <optgroup label="Dull Cover">
+                        <option value="0.0085">80# Coated Dull cover</option>
+                        <option value="0.011">100# Coated Dull cover</option>
+                    </optgroup>
+                </select>
+                <p></p>
+                <button class="pure-button pure-button-primary">Generate template</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let form = document.querySelector('.creep-form');
+        let numberOfPages = document.querySelector('#numpages');
+        let paper = document.querySelector('#paper');
+        let width = document.querySelector('#page-width');
+        let height = document.querySelector('#page-height');
+
+        form.addEventListener('click', (e) => {
+            e.preventDefault();
+            const form = {
+                paper: parseFloat(paper.value),
+                width: parseFloat(width.value),
+                height: parseFloat(height.value),
+                numberOfPages: parseInt(numberOfPages.value)
+            }
+
+            console.log(form);
+
+            for (let i = 0; i < form.numberOfPages / 2; i++) {
+                console.log(`Page ${i + 1} = ${form.paper * i}`);
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>
