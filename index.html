@@ -26,7 +26,7 @@
                 <label for="page-height">Page height</label>
                 <input type="number" id="page-height" placeholder="11" value="11" />
 
-                <label for="numpages">Booklet number of pages</label>
+                <label for="numpages">Number of pages</label>
                 <input type="number" id="numpages" placeholder="8" value="8" />
 
                 <label for="paper"> Text pages stock </label>
@@ -89,11 +89,44 @@
             }
 
             console.log(form);
+            let frontCreep = 0;
+            let creep = [];
 
-            for (let i = 0; i < form.numberOfPages / 2; i++) {
-                console.log(`Page ${i + 1} = ${form.paper * i}`);
+            if (Number.isInteger(form.numberOfPages / 4)) {
+                for (let i = 0; i < form.numberOfPages / 4; i++) {
+                    console.log(`${frontCreep.toFixed(3)}`);
+                    creep.push(frontCreep.toFixed(3));
+                    frontCreep = (form.paper * (i + 1)) * 2;
+                }
+            } else {
+                alert("Number of pages must be divisible by 4");
             }
+
+            console.log(creep);
+
+            creepPages(creep, form.numberOfPages);
+
         });
+
+        function creepPages(arr, numOfPages) {
+            let n = numOfPages;
+            let f = 1;
+            let count = arr.length;
+
+            let result = [];
+
+            for (let i = 0; i < count; i++) {
+                result.push([f, f + 1, n - 1, n, parseFloat(arr[i])]);
+                n = n - 2;
+                f = f + 2;
+            }
+
+            console.log(result);
+
+        }
+
+
+
 
 
     </script>
