@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.62/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.62/pdfmake.min.js.map"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.62/vfs_fonts.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
         integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
 
@@ -13,88 +17,103 @@
         .content {
             margin: 20px;
         }
+
+        rect {
+            outline-offset: 1px;
+        }
     </style>
 </head>
 
 <body>
     <div class="pure-g">
         <div class="content pure-u-1-3">
+
             <form class="creep-form pure-form pure-form-stacked">
-                <label for="page-width">Page width</label>
-                <input type="number" id="page-width" step=".125" placeholder="8.5" value="8.5" />
+                <fieldset>
+                    <legend>Booklet creep dynamic template</legend>
+                    <label for="page-width">Page width</label>
+                    <input type="number" id="page-width" step=".125" placeholder="8.5" value="8.5" />
 
-                <label for="page-height">Page height</label>
-                <input type="number" id="page-height" placeholder="11" value="11" />
+                    <label for="page-height">Page height</label>
+                    <input type="number" id="page-height" placeholder="11" value="11" />
 
-                <label for="numpages">Number of pages</label>
-                <input type="number" id="numpages" placeholder="8" value="8" />
+                    <label for="page-margin">Margin</label>
+                    <input type="number" id="page-margin" value=".25" step=".125" />
 
-                <label for="paper"> Text pages stock </label>
-                <select id="paper">
-                    <optgroup label="Offset Text">
-                        <option value="0.004">50# Offset text</option>
-                        <option value="0.0045">60# Offset text</option>
-                        <option value="0.005">70# Offset text</option>
-                        <option value="0.006">80# Offset text</option>
-                        <option value="0.007">100# Offset text</option>
-                    </optgroup>
-                    <optgroup label="Offset Cover">
-                        <option value="0.0065">50# Offset cover</option>
-                        <option value="0.0095">65# Offset cover</option>
-                        <option value="0.0115">80# Offset cover</option>
-                    </optgroup>
-                    <optgroup label="Gloss Text">
-                        <option value="0.0029">60# Coated Gloss text</option>
-                        <option value="0.0035">70# Coated Gloss text</option>
-                        <option value="0.0038">80# Coated Gloss text</option>
-                        <option value="0.0048">100# Coated Gloss text</option>
-                    </optgroup>
-                    <optgroup label="Dull Text">
-                        <option value="0.00325">60# Coated Dull text</option>
-                        <option value="0.0037">70# Coated Dull text</option>
-                        <option value="0.00425">80# Coated Dull text</option>
-                        <option value="0.0054">100# Coated Dull text</option>
-                    </optgroup>
-                    <optgroup label="Gloss Cover">
-                        <option value="0.0055">60# Coated Gloss cover</option>
-                        <option value="0.0075">80# Coated Gloss cover</option>
-                        <option value="0.0095">100# Coated Gloss cover</option>
-                        <option value="0.012">120# Coated Gloss cover</option>
-                    </optgroup>
-                    <optgroup label="Dull Cover">
-                        <option value="0.0085">80# Coated Dull cover</option>
-                        <option value="0.011">100# Coated Dull cover</option>
-                    </optgroup>
-                </select>
-                <p></p>
-                <button class="pure-button pure-button-primary">Generate template</button>
+                    <label for="numpages">Number of pages</label>
+                    <input type="number" id="numpages" placeholder="8" value="8" />
+
+                    <label for="paper"> Text pages stock </label>
+                    <select id="paper">
+                        <optgroup label="Offset Text">
+                            <option value="0.004">50# Offset text</option>
+                            <option value="0.0045">60# Offset text</option>
+                            <option value="0.005">70# Offset text</option>
+                            <option value="0.006">80# Offset text</option>
+                            <option value="0.007">100# Offset text</option>
+                        </optgroup>
+                        <optgroup label="Offset Cover">
+                            <option value="0.0065">50# Offset cover</option>
+                            <option value="0.0095">65# Offset cover</option>
+                            <option value="0.0115">80# Offset cover</option>
+                        </optgroup>
+                        <optgroup label="Gloss Text">
+                            <option value="0.0029">60# Coated Gloss text</option>
+                            <option value="0.0035">70# Coated Gloss text</option>
+                            <option value="0.0038">80# Coated Gloss text</option>
+                            <option value="0.0048">100# Coated Gloss text</option>
+                        </optgroup>
+                        <optgroup label="Dull Text">
+                            <option value="0.00325">60# Coated Dull text</option>
+                            <option value="0.0037">70# Coated Dull text</option>
+                            <option value="0.00425">80# Coated Dull text</option>
+                            <option value="0.0054">100# Coated Dull text</option>
+                        </optgroup>
+                        <optgroup label="Gloss Cover">
+                            <option value="0.0055">60# Coated Gloss cover</option>
+                            <option value="0.0075">80# Coated Gloss cover</option>
+                            <option value="0.0095">100# Coated Gloss cover</option>
+                            <option value="0.012">120# Coated Gloss cover</option>
+                        </optgroup>
+                        <optgroup label="Dull Cover">
+                            <option value="0.0085">80# Coated Dull cover</option>
+                            <option value="0.011">100# Coated Dull cover</option>
+                        </optgroup>
+                    </select>
+                    <p></p>
+                    <button id="create-pdf-btn" class="pure-button pure-button-primary">Generate template</button>
+                </fieldset>
+
             </form>
+            <img
+                src="data:image/png;base64,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+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLpKwDE01cAiKevABBPXwEgnr4CQDx9BYB4+goA8fQVAOLp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" />
         </div>
     </div>
 
     <script>
         let form = document.querySelector('.creep-form');
+        let submitBtn = document.querySelector('#create-pdf-btn');
         let numberOfPages = document.querySelector('#numpages');
         let paper = document.querySelector('#paper');
         let width = document.querySelector('#page-width');
         let height = document.querySelector('#page-height');
+        let margin = document.querySelector('#page-margin');
 
-        form.addEventListener('click', (e) => {
+        submitBtn.addEventListener('click', (e) => {
             e.preventDefault();
             const form = {
                 paper: parseFloat(paper.value),
                 width: parseFloat(width.value),
                 height: parseFloat(height.value),
-                numberOfPages: parseInt(numberOfPages.value)
+                numberOfPages: parseInt(numberOfPages.value),
+                margin: parseFloat(margin.value)
             }
 
-            console.log(form);
             let frontCreep = 0;
             let creep = [];
 
             if (Number.isInteger(form.numberOfPages / 4)) {
                 for (let i = 0; i < form.numberOfPages / 4; i++) {
-                    console.log(`${frontCreep.toFixed(3)}`);
                     creep.push(frontCreep.toFixed(3));
                     frontCreep = (form.paper * (i + 1)) * 2;
                 }
@@ -102,16 +121,16 @@
                 alert("Number of pages must be divisible by 4");
             }
 
-            console.log(creep);
-
-            creepPages(creep, form.numberOfPages);
+            creepPages(creep, form.numberOfPages, form);
 
         });
 
-        function creepPages(arr, numOfPages) {
+        function creepPages(arr, numOfPages, obj) {
             let n = numOfPages;
             let f = 1;
             let count = arr.length;
+            let margin = obj.margin * 72;
+
 
             let result = [];
 
@@ -121,13 +140,64 @@
                 f = f + 2;
             }
 
-            console.log(result);
+            let dd = {
+                pageSize: {
+                    width: obj.width * 72,
+                    height: obj.height * 72
+                },
+
+                content: []
+            }
+
+
+            for (let i = 0; i < obj.numberOfPages; i++) {
+                let x = xMargin(result, i + 1);
+                let m = 0;
+                if (x >= 0) {
+                    if (i + 1 === 1)
+                        m = x - margin;
+                    else
+                        if (i + 1 === obj.numberOfPages - 1)
+                            m = x - margin;
+                        else
+                            m = x + margin;
+                } else {
+                    m = x - margin;
+                }
+                dd.content.push({
+                    svg: `<svg viewBox="0 0 ${obj.width * 72} ${obj.height * 72}" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Simple rectangle -->
+                        <rect stroke="red" fill="#FEF9E7" x="${x}" y="0" width="${obj.width * 72}" height="${obj.height * 72}" />
+                        <rect  fill="#EBF5FB" x="${m}" y="${margin}" width="${(obj.width * 72)}" height="${(obj.height * 72) - (margin * 2)}" />
+                        <text fill="#626567" font-size="150" text-anchor="middle" x="50%" y="50%" class="page">${i + 1}</text>
+                    </svg>`
+                });
+            }
+
+            dd.pageMargins = [0, 0, 0, 0];
+
+            createPDF(dd);
 
         }
 
+        function xMargin(creep, page) {
+            const c = creep;
+            for (let i = 0; i < c.length; i++) {
+                if (c[i].includes(page)) {
 
+                    if (page % 2 === 0)
+                        return c[i][4] * 72;
+                    else
+                        return (c[i][4] * 72) - ((c[i][4] * 72) * 2);
+                }
 
+            }
+            return 0;
+        }
 
+        function createPDF(dd) {
+            let doc = pdfMake.createPdf(dd).open();
+        }
 
     </script>
 </body>
